@@ -12,11 +12,16 @@
     <artifactId>app</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>ni.bob.ant</groupId>
+            <artifactId>usecase</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
