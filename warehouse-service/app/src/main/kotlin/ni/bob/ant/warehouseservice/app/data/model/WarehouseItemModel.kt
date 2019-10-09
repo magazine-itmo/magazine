@@ -1,5 +1,7 @@
 package ni.bob.ant.warehouseservice.app.data.model
 
+import ni.bob.ant.warehouseservice.core.entity.Identity
+import ni.bob.ant.warehouseservice.core.entity.WarehouseItem
 import javax.persistence.*
 
 @Entity
@@ -14,8 +16,15 @@ data class WarehouseItemModel(
     lateinit var name: String
 
     @Column(nullable = false)
-    var price: Long = 0
+    var price: Int = 0
 
     @Column(nullable = false)
     var amount: Long = 0
 }
+
+fun WarehouseItemModel.toEntity() = WarehouseItem(
+        identity = Identity(this.id),
+        name = this.name,
+        price = this.price,
+        amount = this.amount
+)

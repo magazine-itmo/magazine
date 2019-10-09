@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository
 @Repository
 class WarehouseRepositoryImpl(private val warehouseRepository: JpaWarehouseRepository) : WarehouseRepository {
 
-    override fun create(name: String, amount: Long): WarehouseItem {
+    override fun create(newWarehouseItem: WarehouseItem): WarehouseItem {
+        require(newWarehouseItem.identity == Identity.new) { "New warehouse item expected $newWarehouseItem" }
         TODO()
     }
 

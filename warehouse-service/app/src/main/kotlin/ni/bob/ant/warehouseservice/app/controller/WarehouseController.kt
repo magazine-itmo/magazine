@@ -29,7 +29,9 @@ class WarehouseController(
     @PostMapping
     fun createItem(
             @RequestBody request: WarehouseItemRequest
-    ): WarehouseItemResponse = createItemUseCase.execute(request.name, request.amount).toResponse()
+    ): WarehouseItemResponse = createItemUseCase.execute(
+            CreateItemUseCase.NewWarehouseItemDto(request.name, request.amount, request.price)
+    ).toResponse()
 
     @PutMapping("{itemId}/addition/{amount}")
     fun replenishItem(
