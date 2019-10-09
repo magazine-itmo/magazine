@@ -15,7 +15,7 @@ data class WarehouseItemResponse(
 )
 
 fun WarehouseItemDto.toResponse() = WarehouseItemResponse(
-        id = this.itemDto.id,
-        name = this.itemDto.name,
+        id = this.id,
+        name = this.name,
         amount = this.amount
 )

@@ -1,14 +1,15 @@
 package ni.bob.ant.warehouseservice.core.entity
 
 class WarehouseItem(
-        val item: Item,
-        amount: Long
+        val identity: Identity,
+        val name: String,
+        quantity: Long
 ) {
 
-    var amount: Long = amount
+    var quantity: Long = quantity
         private set
 
     fun replenish(amount: Long) {
-        this.amount += amount
+        this.quantity += amount
     }
 }

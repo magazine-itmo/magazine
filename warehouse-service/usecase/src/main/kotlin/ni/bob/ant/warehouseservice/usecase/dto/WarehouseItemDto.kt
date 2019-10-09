@@ -3,11 +3,13 @@ package ni.bob.ant.warehouseservice.usecase.dto
 import ni.bob.ant.warehouseservice.core.entity.WarehouseItem
 
 data class WarehouseItemDto(
-        val itemDto: ItemDto,
+        val id: Long,
+        val name: String,
         val amount: Long
 )
 
 fun WarehouseItem.toDto() = WarehouseItemDto(
-        itemDto = this.item.toDto(),
-        amount = this.amount
+        id = this.identity.value,
+        name = this.name,
+        amount = this.quantity
 )
