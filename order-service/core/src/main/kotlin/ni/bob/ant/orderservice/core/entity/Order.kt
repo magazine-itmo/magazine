@@ -1,16 +1,20 @@
 package ni.bob.ant.orderservice.core.entity
 
+import java.util.*
+
 class Order(
         val identity: Identity,
         state: OrderState,
-        orderItems: Map<Item, Long>
+        orderItems: List<OrderItem>
 ) {
 
     var state: OrderState = state
         private set
 
-    private val _orderItems: MutableMap<Item, Long> = orderItems.toMutableMap()
-    val orderItems: Map<Item, Long>
+    private val _orderItems: MutableCollection<OrderItem> = TreeSet<OrderItem>(
+            Comparator.comparingLong { it.stockItem.identity.value }
+    ).apply { addAll(orderItems) }
+    val orderItems: Collection<OrderItem>
         get() = _orderItems
 
     fun toState(newState: OrderState) {
@@ -21,9 +25,12 @@ class Order(
         return OrderStateTransitions.isTransitionAllowed(state, newState)
     }
 
-    fun addItems(item: Item, amount: Long) {
-        _orderItems.compute(item) { _, oldAmount ->
-            (oldAmount ?: 0) + amount
-        }
+    fun addItems(stockItem: StockItem, quantity: Long) {
+        val orderItem = _orderItems.find { it.stockItem == stockItem }
+                ?.let { orderItem ->
+                    orderItem.copy(quantity = orderItem.quantity + quantity)
+                }
+                ?: OrderItem(Identity.new, stockItem, quantity)
+        _orderItems.add(orderItem)
     }
 }
