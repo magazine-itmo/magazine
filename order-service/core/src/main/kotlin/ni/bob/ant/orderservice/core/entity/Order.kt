@@ -11,6 +11,9 @@ class Order(
     var state: OrderState = state
         private set
 
+    val totalAmount: Long
+        get() = orderItems.map { it.quantity * it.stockItem.price }.sum()
+
     private val _orderItems: MutableCollection<OrderItem> = TreeSet<OrderItem>(
             Comparator.comparingLong { it.stockItem.identity.value }
     ).apply { addAll(orderItems) }

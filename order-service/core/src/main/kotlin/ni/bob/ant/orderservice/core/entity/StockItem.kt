@@ -2,5 +2,6 @@ package ni.bob.ant.orderservice.core.entity
 
 data class StockItem(
         val identity: Identity,
-        val name: String
+        val name: String,
+        val price: Int
 )

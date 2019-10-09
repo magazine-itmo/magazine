@@ -5,11 +5,13 @@ import ni.bob.ant.warehouseservice.core.entity.WarehouseItem
 data class WarehouseItemDto(
         val id: Long,
         val name: String,
-        val amount: Long
+        val amount: Long,
+        val price: Int
 )
 
 fun WarehouseItem.toDto() = WarehouseItemDto(
         id = this.identity.value,
         name = this.name,
-        amount = this.quantity
+        amount = this.amount,
+        price = this.price
 )
