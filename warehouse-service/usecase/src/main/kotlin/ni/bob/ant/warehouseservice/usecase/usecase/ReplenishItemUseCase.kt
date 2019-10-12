@@ -13,10 +13,10 @@ class ReplenishItemUseCase(
         private val warehouseRepository: WarehouseRepository
 ) {
 
-    fun execute(itemId: Long, amount: Long): WarehouseItemDto {
-        amount.takeIf { it < 0 || it > 10_000 }?.let { throw IllegalAmountException(amount) }
+    fun execute(itemId: Long, quantity: Int): WarehouseItemDto {
+        quantity.takeIf { it < 0 || it > 10_000 }?.let { throw IllegalAmountException(quantity) }
         val itemQuantity = warehouseRepository.findByItemId(Identity(itemId)) ?: notFound<WarehouseItem>(itemId)
-        itemQuantity.replenish(amount)
+        itemQuantity.replenish(quantity)
         warehouseRepository.save(itemQuantity)
         return itemQuantity.toDto()
     }

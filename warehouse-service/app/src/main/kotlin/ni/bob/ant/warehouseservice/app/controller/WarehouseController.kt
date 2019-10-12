@@ -30,12 +30,12 @@ class WarehouseController(
     fun createItem(
             @RequestBody request: WarehouseItemRequest
     ): WarehouseItemResponse = createItemUseCase.execute(
-            CreateItemUseCase.NewWarehouseItemDto(request.name, request.amount, request.price)
+            CreateItemUseCase.NewWarehouseItemDto(request.name, request.quantity, request.price)
     ).toResponse()
 
     @PutMapping("{itemId}/addition/{amount}")
     fun replenishItem(
             @PathVariable itemId: Long,
-            @PathVariable amount: Long
+            @PathVariable amount: Int
     ): WarehouseItemResponse = replenishItemUseCase.execute(itemId, amount).toResponse()
 }

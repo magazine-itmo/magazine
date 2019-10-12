@@ -19,12 +19,12 @@ data class WarehouseItemModel(
     var price: Int = 0
 
     @Column(nullable = false)
-    var amount: Long = 0
+    var quantity: Int = 0
 }
 
 fun WarehouseItemModel.toEntity() = WarehouseItem(
         identity = Identity(this.id),
         name = this.name,
         price = this.price,
-        amount = this.amount
+        quantity = this.quantity
 )

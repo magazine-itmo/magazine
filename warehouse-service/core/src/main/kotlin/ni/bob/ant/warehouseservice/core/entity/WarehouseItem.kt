@@ -4,13 +4,13 @@ class WarehouseItem(
         val identity: Identity,
         val name: String,
         val price: Int,
-        amount: Long
+        quantity: Int
 ) {
 
-    var amount: Long = amount
+    var quantity: Int = quantity
         private set
 
-    fun replenish(amount: Long) {
-        this.amount += amount
+    fun replenish(quantity: Int) {
+        this.quantity += quantity
     }
 }

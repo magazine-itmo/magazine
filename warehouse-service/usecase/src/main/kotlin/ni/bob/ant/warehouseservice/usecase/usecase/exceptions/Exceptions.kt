@@ -7,4 +7,4 @@ inline fun <reified T : Any> notFound(id: Any): Nothing = throw NotFoundExceptio
 class TransitionIsNotAllowed(id: Any, state: String)
     : RuntimeException("Transition to state $state is not allowed for order $id")
 
-class IllegalAmountException(amount: Long) : RuntimeException("Cannot replenish item with $amount")
+class IllegalAmountException(amount: Int) : RuntimeException("Cannot replenish item with $amount")

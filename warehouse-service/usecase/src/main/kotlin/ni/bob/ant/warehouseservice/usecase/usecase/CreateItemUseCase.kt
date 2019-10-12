@@ -16,14 +16,14 @@ class CreateItemUseCase(
                 Identity.new,
                 newWarehouseItemDto.name,
                 newWarehouseItemDto.price,
-                newWarehouseItemDto.amount
+                newWarehouseItemDto.quantity
         )
         return warehouseRepository.create(newWarehouseItem).toDto()
     }
 
     data class NewWarehouseItemDto(
             val name: String,
-            val amount: Long,
+            val quantity: Int,
             val price: Int
     )
 
