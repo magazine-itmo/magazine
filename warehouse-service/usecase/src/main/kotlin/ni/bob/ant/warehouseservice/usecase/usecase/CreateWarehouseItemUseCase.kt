@@ -7,7 +7,7 @@ import ni.bob.ant.warehouseservice.usecase.dto.WarehouseItemDto
 import ni.bob.ant.warehouseservice.usecase.dto.toDto
 
 @UseCase
-class CreateItemUseCase(
+class CreateWarehouseItemUseCase(
         private val warehouseRepository: WarehouseRepository
 ) {
 

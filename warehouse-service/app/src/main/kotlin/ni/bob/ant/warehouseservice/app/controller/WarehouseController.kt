@@ -3,7 +3,7 @@ package ni.bob.ant.warehouseservice.app.controller
 import ni.bob.ant.warehouseservice.app.controller.dto.WarehouseItemRequest
 import ni.bob.ant.warehouseservice.app.controller.dto.WarehouseItemResponse
 import ni.bob.ant.warehouseservice.app.controller.dto.toResponse
-import ni.bob.ant.warehouseservice.usecase.usecase.CreateItemUseCase
+import ni.bob.ant.warehouseservice.usecase.usecase.CreateWarehouseItemUseCase
 import ni.bob.ant.warehouseservice.usecase.usecase.FindWarehouseItemUseCase
 import ni.bob.ant.warehouseservice.usecase.usecase.GetAllWarehouseItemsUseCase
 import ni.bob.ant.warehouseservice.usecase.usecase.ReplenishItemUseCase
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 class WarehouseController(
         private val getAllWarehouseItemsUseCase: GetAllWarehouseItemsUseCase,
         private val findWarehouseItemUseCase: FindWarehouseItemUseCase,
-        private val createItemUseCase: CreateItemUseCase,
+        private val createWarehouseItemUseCase: CreateWarehouseItemUseCase,
         private val replenishItemUseCase: ReplenishItemUseCase
 ) {
 
@@ -29,8 +29,8 @@ class WarehouseController(
     @PostMapping
     fun createItem(
             @RequestBody request: WarehouseItemRequest
-    ): WarehouseItemResponse = createItemUseCase.execute(
-            CreateItemUseCase.NewWarehouseItemDto(request.name, request.quantity, request.price)
+    ): WarehouseItemResponse = createWarehouseItemUseCase.execute(
+            CreateWarehouseItemUseCase.NewWarehouseItemDto(request.name, request.quantity, request.price)
     ).toResponse()
 
     @PutMapping("{itemId}/addition/{amount}")
