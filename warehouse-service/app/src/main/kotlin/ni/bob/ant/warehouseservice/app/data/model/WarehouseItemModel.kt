@@ -28,3 +28,10 @@ fun WarehouseItemModel.toEntity() = WarehouseItem(
         price = this.price,
         quantity = this.quantity
 )
+
+fun WarehouseItem.toModel() = WarehouseItemModel().apply {
+    this.id = this@toModel.identity.value
+    this.name = this@toModel.name
+    this.price = this@toModel.price
+    this.quantity = this@toModel.quantity
+}
