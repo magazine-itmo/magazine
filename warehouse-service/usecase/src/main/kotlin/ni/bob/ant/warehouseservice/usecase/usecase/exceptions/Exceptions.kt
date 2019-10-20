@@ -4,7 +4,4 @@ open class NotFoundException(id: Any, entity: String) : RuntimeException("$entit
 
 inline fun <reified T : Any> notFound(id: Any): Nothing = throw NotFoundException(id, T::class.java.simpleName)
 
-class TransitionIsNotAllowed(id: Any, state: String)
-    : RuntimeException("Transition to state $state is not allowed for order $id")
-
 class IllegalAmountException(amount: Int) : RuntimeException("Cannot replenish item with $amount")
