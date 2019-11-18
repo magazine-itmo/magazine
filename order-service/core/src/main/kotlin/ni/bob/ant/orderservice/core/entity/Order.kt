@@ -11,8 +11,11 @@ class Order(
     var state: OrderState = state
         private set
 
-    val totalAmount: Long
-        get() = orderItems.map { it.quantity * it.stockItem.price }.sum()
+    val totalCost: Long
+        get() = orderItems.map { it.quantity * it.stockItem.price }.sum().toLong()
+
+    val totalAmount: Int
+        get() = orderItems.map { it.quantity }.sum()
 
     private val _orderItems: MutableCollection<OrderItem> = TreeSet<OrderItem>(
             Comparator.comparingLong { it.stockItem.identity.value }
@@ -28,12 +31,13 @@ class Order(
         return OrderStateTransitions.isTransitionAllowed(state, newState)
     }
 
-    fun addItems(stockItem: StockItem, quantity: Long) {
-        val orderItem = _orderItems.find { it.stockItem == stockItem }
-                ?.let { orderItem ->
-                    orderItem.copy(quantity = orderItem.quantity + quantity)
+    fun addItems(orderItem: OrderItem, quantity: Int): OrderItem {
+        val storedItem = _orderItems.find { it == orderItem }
+                ?.let { existingItem ->
+                    existingItem.copy(quantity = existingItem.quantity + quantity)
                 }
-                ?: OrderItem(Identity.new, stockItem, quantity)
-        _orderItems.add(orderItem)
+                ?: orderItem
+        _orderItems.add(storedItem)
+        return storedItem
     }
 }
