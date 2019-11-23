@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query
 
 interface JpaOrderItemRepository : JpaRepository<OrderItemModel, Long> {
 
-    @Query("SELECT oim FROM OrderModel o INNER JOIN OrderItemModel oim WHERE o.orderId = :orderId AND oim.stockItem = :stockItem")
+    @Query("SELECT oim FROM OrderModel o INNER JOIN OrderItemModel oim WHERE o.orderId = :orderId AND oim.stockItem = :stockItemId")
     fun findByStockItemId(orderId: Long, stockItemId: Long): OrderItemModel?
 }
