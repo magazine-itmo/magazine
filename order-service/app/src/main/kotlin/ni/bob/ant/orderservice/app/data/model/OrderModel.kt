@@ -9,7 +9,7 @@ data class OrderModel(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var orderId: Long = 0
 ) {
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "order_id")
     lateinit var orderItems: Collection<OrderItemModel>
 

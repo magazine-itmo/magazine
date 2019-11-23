@@ -9,7 +9,7 @@ data class OrderItemModel(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0
 ) {
-    @ManyToOne(targetEntity = StockItemModel::class)
+    @ManyToOne(targetEntity = StockItemModel::class, cascade = [CascadeType.ALL])
     lateinit var stockItem: StockItemModel
 
     @Column(nullable = false)
