@@ -7,9 +7,9 @@ import ni.bob.ant.orderservice.usecase.exceptions.notFound
 
 @UseCase
 class AddOrderItemUseCase(
-        private val orderRepository: OrderRepository,
-        private val orderItemRepository: OrderItemRepository,
-        private val stockItemRepository: StockItemRepository
+    private val orderRepository: OrderRepository,
+    private val orderItemRepository: OrderItemRepository,
+    private val stockItemRepository: StockItemRepository
 ) {
     fun execute(id: Long, item: ItemDto): Long {
         //TODO: Implement the ability to find item by id in WarehouseService

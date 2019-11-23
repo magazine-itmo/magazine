@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("api/orders")
 class OrderController(
-        private val changeOrderStatusUseCase: ChangeOrderStatusUseCase,
-        private val getAllOrdersUseCase: GetAllOrdersUseCase,
-        private val findOrderUseCase: FindOrderUseCase,
-        private val addOrderItemUseCase: AddOrderItemUseCase
+    private val changeOrderStatusUseCase: ChangeOrderStatusUseCase,
+    private val getAllOrdersUseCase: GetAllOrdersUseCase,
+    private val findOrderUseCase: FindOrderUseCase,
+    private val addOrderItemUseCase: AddOrderItemUseCase
 ) {
 
     @GetMapping
@@ -34,5 +34,4 @@ class OrderController(
     fun addItemToOrder(@PathVariable id: Long, @RequestBody request: OrderItemRequest): Long {
         return addOrderItemUseCase.execute(id, ItemDto(request.id, request.amount))
     }
-
 }

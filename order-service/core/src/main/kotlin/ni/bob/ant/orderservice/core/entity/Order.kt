@@ -3,9 +3,9 @@ package ni.bob.ant.orderservice.core.entity
 import java.util.*
 
 class Order(
-        val identity: Identity,
-        state: OrderState,
-        orderItems: List<OrderItem>
+    val identity: Identity,
+    state: OrderState,
+    orderItems: List<OrderItem>
 ) {
 
     var state: OrderState = state

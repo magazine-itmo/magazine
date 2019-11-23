@@ -4,4 +4,3 @@ import ni.bob.ant.orderservice.usecase.usecase.ChangeOrderStatusUseCase
 
 interface OrderStateRepository :
         ChangeOrderStatusUseCase.OrderStateRepository
-

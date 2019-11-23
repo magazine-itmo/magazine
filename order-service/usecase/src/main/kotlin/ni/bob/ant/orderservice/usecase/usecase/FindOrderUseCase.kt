@@ -9,7 +9,7 @@ import ni.bob.ant.orderservice.usecase.exceptions.notFound
 
 @UseCase
 class FindOrderUseCase(
-        private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository
 ) {
     fun execute(id: Long): OrderDto {
         return orderRepository.findOrderById(Identity(id))?.toDto() ?: notFound<Order>(id)

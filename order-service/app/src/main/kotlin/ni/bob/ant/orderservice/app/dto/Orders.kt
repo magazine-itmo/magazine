@@ -8,18 +8,18 @@ import ni.bob.ant.orderservice.usecase.dto.OrderDto
 import ni.bob.ant.orderservice.usecase.dto.OrderItemDto
 
 class OrderItemRequest(
-        val id: Long,
-        val amount: Int,
-        val username: String
+    val id: Long,
+    val amount: Int,
+    val username: String
 )
 
 data class OrderResponse(
-        val id: Long,
-        val state: String,
-        val totalCost: Long,
-        val countOfItems: Int,
-        val username: String = "Username",
-        val items: List<OrderItemDto>
+    val id: Long,
+    val state: String,
+    val totalCost: Long,
+    val countOfItems: Int,
+    val username: String = "Username",
+    val items: List<OrderItemDto>
 )
 
 fun OrderDto.toResponse() = OrderResponse(
@@ -37,15 +37,15 @@ fun OrderModel.toEntity() = Order(
 )
 
 private fun String.toState(): OrderState? =
-    when (this.toLowerCase()) {
-        "collecting" -> OrderState.Collecting
-        "paid" -> OrderState.Paid
-        "failed" -> OrderState.Failed
-        "shipping" -> OrderState.Shipping
-        "cancelled" -> OrderState.Cancelled
-        "complete" -> OrderState.Completed
-        else -> null
-}
+        when (this.toLowerCase()) {
+            "collecting" -> OrderState.Collecting
+            "paid" -> OrderState.Paid
+            "failed" -> OrderState.Failed
+            "shipping" -> OrderState.Shipping
+            "cancelled" -> OrderState.Cancelled
+            "complete" -> OrderState.Completed
+            else -> null
+        }
 
 fun OrderItemModel.toEntity() = OrderItem(
         identity = Identity(this.id),

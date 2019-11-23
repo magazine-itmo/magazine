@@ -2,14 +2,13 @@ package ni.bob.ant.orderservice.usecase.dto
 
 import ni.bob.ant.orderservice.core.entity.Order
 import ni.bob.ant.orderservice.core.entity.OrderItem
-import ni.bob.ant.orderservice.core.entity.OrderState
 
 data class OrderDto(
-        val id: Long,
-        val state: String,
-        val totalCost: Long,
-        val totalAmount: Int,
-        val items: List<OrderItemDto>
+    val id: Long,
+    val state: String,
+    val totalCost: Long,
+    val totalAmount: Int,
+    val items: List<OrderItemDto>
 )
 
 fun Order.toDto() = OrderDto(
@@ -21,9 +20,9 @@ fun Order.toDto() = OrderDto(
 )
 
 data class OrderItemDto(
-        val id: Long,
-        val name: String,
-        val amount: Int
+    val id: Long,
+    val name: String,
+    val amount: Int
 )
 
 private fun OrderItem.toDto() = OrderItemDto(
@@ -33,6 +32,6 @@ private fun OrderItem.toDto() = OrderItemDto(
 )
 
 data class ItemDto(
-        val id: Long,
-        val amount: Int
+    val id: Long,
+    val amount: Int
 )

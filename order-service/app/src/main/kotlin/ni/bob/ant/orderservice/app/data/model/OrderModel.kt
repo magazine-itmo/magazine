@@ -1,14 +1,13 @@
 package ni.bob.ant.orderservice.app.data.model
 
-import ni.bob.ant.orderservice.core.entity.OrderState
 import javax.persistence.*
 
 @Entity
 @Table(name = "orders")
 data class OrderModel(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var orderId: Long = 0
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var orderId: Long = 0
 ) {
     @OneToMany
     @JoinColumn(name = "order_id")

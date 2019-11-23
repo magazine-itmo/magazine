@@ -12,11 +12,13 @@ sealed class OrderState {
         return this.javaClass.simpleName
     }
 }
+
 data class Data(
-        val id: String,
-        val parameterType: Parameter,
-        val parameterValue: String
+    val id: String,
+    val parameterType: Parameter,
+    val parameterValue: String
 )
+
 sealed class Parameter(val value: String)
-object FirstName: Parameter("First Name")
+object FirstName : Parameter("First Name")
 object FullName : Parameter("Full Name")

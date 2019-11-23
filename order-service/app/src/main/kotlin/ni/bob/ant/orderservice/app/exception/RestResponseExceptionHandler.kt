@@ -1,7 +1,6 @@
 package ni.bob.ant.orderservice.app.exception
 
 import ni.bob.ant.orderservice.usecase.exceptions.NotFoundException
-import org.postgresql.util.PSQLException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
