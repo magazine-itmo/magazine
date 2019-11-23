@@ -9,7 +9,8 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
-class OrdersRepositoryImpl(private val jpaRepository: JpaOrderRepository) : OrderRepository {
+class OrderRepositoryImpl(private val jpaRepository: JpaOrderRepository) : OrderRepository {
+
     override fun create(newOrder: Order): Order {
         require(newOrder.identity == Identity.new) { "New newOrder is expected $newOrder" }
         return jpaRepository.save(newOrder.toModel()).toEntity()
