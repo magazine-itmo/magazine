@@ -5,7 +5,7 @@ import java.util.*
 class Order(
     val identity: Identity,
     state: OrderState,
-    orderItems: List<OrderItem>
+    orderItems: List<OrderItem> = emptyList()
 ) {
 
     var state: OrderState = state
@@ -31,13 +31,12 @@ class Order(
         return OrderStateTransitions.isTransitionAllowed(state, newState)
     }
 
-    fun addItems(orderItem: OrderItem, quantity: Int): OrderItem {
-        val storedItem = _orderItems.find { it == orderItem }
-                ?.let { existingItem ->
-                    existingItem.copy(quantity = existingItem.quantity + quantity)
+    fun addItems(stockItem: StockItem, quantity: Int) {
+        val orderItem = _orderItems.find { it.stockItem == stockItem }
+                ?.let { orderItem ->
+                    orderItem.copy(quantity = orderItem.quantity + quantity)
                 }
-                ?: orderItem
-        _orderItems.add(storedItem)
-        return storedItem
+                ?: OrderItem(Identity.new, stockItem, quantity)
+        _orderItems.add(orderItem)
     }
 }

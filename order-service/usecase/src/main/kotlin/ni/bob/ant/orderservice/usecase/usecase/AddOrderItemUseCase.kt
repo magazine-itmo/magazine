@@ -3,6 +3,8 @@ package ni.bob.ant.orderservice.usecase.usecase
 import ni.bob.ant.orderservice.core.entity.*
 import ni.bob.ant.orderservice.usecase.conf.UseCase
 import ni.bob.ant.orderservice.usecase.dto.ItemDto
+import ni.bob.ant.orderservice.usecase.dto.OrderDto
+import ni.bob.ant.orderservice.usecase.dto.toDto
 import ni.bob.ant.orderservice.usecase.exceptions.notFound
 
 @UseCase
@@ -11,23 +13,28 @@ class AddOrderItemUseCase(
     private val orderItemRepository: OrderItemRepository,
     private val stockItemRepository: StockItemRepository
 ) {
-    fun execute(id: Long, item: ItemDto): Long {
+
+    fun execute(orderId: Long, item: ItemDto): OrderDto {
         //TODO: Implement the ability to find item by id in WarehouseService
-        //At this moment "Mock" is used
-        var stockItem = StockItem(Identity(item.id), "MockItem", -1)
-        stockItem = stockItemRepository.save(stockItem)
-        var newOrderItem = OrderItem(Identity.new, stockItem, item.amount)
-        if (id == -1L) {
-            newOrderItem = orderItemRepository.save(newOrderItem)
-            val order = Order(Identity.new, OrderState.Collecting, listOf(newOrderItem))
-            return orderRepository.create(order).identity.value
+        val stockItem = stockItemRepository.findStockItemById(Identity(item.id)) ?: notFound<StockItem>(item.id)
+        val order = if (orderId == Identity.new.value) {
+            createNewOrder(item, stockItem)
+        } else {
+            addItemToExistingOrder(orderId, item, stockItem)
         }
-        val order = orderRepository.findOrderById(Identity(id)) ?: notFound<Order>(id)
-        val list = orderItemRepository.findByStockItemId(stockItem.identity)
-        val intersect = order.orderItems.intersect(list)
-        val orderItem = if (intersect.isNotEmpty()) intersect.iterator().next() else orderItemRepository.save(newOrderItem)
-        orderItemRepository.save(order.addItems(orderItem, item.amount))
-        return orderRepository.save(order).identity.value
+        return order.toDto()
+    }
+
+    private fun createNewOrder(item: ItemDto, stockItem: StockItem): Order {
+        val order = Order(Identity.new, OrderState.Collecting)
+        order.addItems(stockItem, item.amount)
+        return orderRepository.create(order)
+    }
+
+    private fun addItemToExistingOrder(orderId: Long, item: ItemDto, stockItem: StockItem): Order {
+        val order = orderRepository.findOrderById(Identity(orderId)) ?: notFound<Order>(orderId)
+        order.addItems(stockItem, item.amount)
+        return orderRepository.save(order)
     }
 
     interface OrderRepository {
@@ -38,10 +45,11 @@ class AddOrderItemUseCase(
 
     interface OrderItemRepository {
         fun save(orderItem: OrderItem): OrderItem
-        fun findByStockItemId(stockItemId: Identity): List<OrderItem>
+        fun findByStockItemId(orderId: Long, stockItemId: Identity): OrderItem?
     }
 
     interface StockItemRepository {
+        fun findStockItemById(identity: Identity): StockItem?
         fun save(item: StockItem): StockItem
     }
 }

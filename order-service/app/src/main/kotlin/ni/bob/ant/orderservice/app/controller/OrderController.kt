@@ -32,6 +32,6 @@ class OrderController(
 
     @PostMapping("/{id}/item")
     fun addItemToOrder(@PathVariable id: Long, @RequestBody request: OrderItemRequest): Long {
-        return addOrderItemUseCase.execute(id, ItemDto(request.id, request.amount))
+        return addOrderItemUseCase.execute(id, ItemDto(request.id, request.amount)).id
     }
 }

@@ -30,9 +30,9 @@ fun OrderDto.toResponse() = OrderResponse(
         items = this.items
 )
 
-fun OrderModel.toEntity() = Order(
+fun OrderModel.toEntity(orderState: OrderState) = Order(
         identity = Identity(this.orderId),
-        state = this.state.toState()!!,
+        state = orderState,
         orderItems = this.orderItems.map { it.toEntity() }
 )
 

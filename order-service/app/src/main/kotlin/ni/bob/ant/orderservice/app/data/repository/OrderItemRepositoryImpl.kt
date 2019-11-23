@@ -12,8 +12,8 @@ class OrderItemRepositoryImpl(
     private val jpaRepository: JpaOrderItemRepository
 ) : OrderItemRepository {
 
-    override fun findByStockItemId(stockItemId: Identity): List<OrderItem> {
-        return jpaRepository.findByStockItemId(stockItemId.value).map { it.toEntity() }
+    override fun findByStockItemId(orderId: Long, stockItemId: Identity): OrderItem? {
+        return jpaRepository.findByStockItemId(orderId, stockItemId.value)?.toEntity()
     }
 
     override fun save(orderItem: OrderItem): OrderItem {
