@@ -9,7 +9,7 @@ import ni.bob.ant.warehouseservice.usecase.usecase.exceptions.notFound
 
 @UseCase
 class FindWarehouseItemUseCase(
-        private val warehouseRepository: WarehouseRepository
+    private val warehouseRepository: WarehouseRepository
 ) {
 
     fun execute(id: Long): WarehouseItemDto {

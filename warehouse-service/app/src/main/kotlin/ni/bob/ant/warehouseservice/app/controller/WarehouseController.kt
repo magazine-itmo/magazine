@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("api/warehouse/items")
 class WarehouseController(
-        private val getAllWarehouseItemsUseCase: GetAllWarehouseItemsUseCase,
-        private val findWarehouseItemUseCase: FindWarehouseItemUseCase,
-        private val createWarehouseItemUseCase: CreateWarehouseItemUseCase,
-        private val replenishItemUseCase: ReplenishItemUseCase
+    private val getAllWarehouseItemsUseCase: GetAllWarehouseItemsUseCase,
+    private val findWarehouseItemUseCase: FindWarehouseItemUseCase,
+    private val createWarehouseItemUseCase: CreateWarehouseItemUseCase,
+    private val replenishItemUseCase: ReplenishItemUseCase
 ) {
 
     @GetMapping
@@ -23,12 +23,12 @@ class WarehouseController(
 
     @GetMapping("{itemId}")
     fun getItemById(
-            @PathVariable itemId: Long
+        @PathVariable itemId: Long
     ): WarehouseItemResponse = findWarehouseItemUseCase.execute(itemId).toResponse()
 
     @PostMapping
     fun createItem(
-            @RequestBody request: WarehouseItemRequest
+        @RequestBody request: WarehouseItemRequest
     ): WarehouseItemResponse = createWarehouseItemUseCase.execute(
             CreateWarehouseItemUseCase.NewWarehouseItemDto(request.name, request.quantity, request.price)
     ).toResponse()

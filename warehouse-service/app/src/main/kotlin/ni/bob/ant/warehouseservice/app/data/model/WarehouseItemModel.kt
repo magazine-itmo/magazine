@@ -7,9 +7,9 @@ import javax.persistence.*
 @Entity
 @Table(name = "items")
 data class WarehouseItemModel(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long = 0
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
 ) {
 
     @Column(nullable = false)
