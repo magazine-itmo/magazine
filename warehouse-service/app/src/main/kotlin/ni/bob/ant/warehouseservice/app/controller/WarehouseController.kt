@@ -1,12 +1,11 @@
 package ni.bob.ant.warehouseservice.app.controller
 
+import ni.bob.ant.warehouseservice.api.dto.ReserveWarehouseItemRequest
+import ni.bob.ant.warehouseservice.api.dto.ReserveWarehouseItemResponse
 import ni.bob.ant.warehouseservice.app.controller.dto.WarehouseItemRequest
 import ni.bob.ant.warehouseservice.app.controller.dto.WarehouseItemResponse
 import ni.bob.ant.warehouseservice.app.controller.dto.toResponse
-import ni.bob.ant.warehouseservice.usecase.usecase.CreateWarehouseItemUseCase
-import ni.bob.ant.warehouseservice.usecase.usecase.FindWarehouseItemUseCase
-import ni.bob.ant.warehouseservice.usecase.usecase.GetAllWarehouseItemsUseCase
-import ni.bob.ant.warehouseservice.usecase.usecase.ReplenishItemUseCase
+import ni.bob.ant.warehouseservice.usecase.usecase.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,7 +14,8 @@ class WarehouseController(
     private val getAllWarehouseItemsUseCase: GetAllWarehouseItemsUseCase,
     private val findWarehouseItemUseCase: FindWarehouseItemUseCase,
     private val createWarehouseItemUseCase: CreateWarehouseItemUseCase,
-    private val replenishItemUseCase: ReplenishItemUseCase
+    private val replenishItemUseCase: ReplenishItemUseCase,
+    private val reservationItemUseCase: ReservationItemUseCase
 ) {
 
     @GetMapping
@@ -34,6 +34,15 @@ class WarehouseController(
     ).toResponse()
 
     @PutMapping("{itemId}")
-    fun replenishItem(@RequestBody request: WarehouseItemRequest, @PathVariable itemId: Long): WarehouseItemResponse =
+    fun replenishItem(
+        @RequestBody request: WarehouseItemRequest,
+        @PathVariable itemId: Long
+    ): WarehouseItemResponse =
             replenishItemUseCase.execute(itemId, request.quantity).toResponse()
+
+    @PostMapping("/reservation")
+    fun reserveItems(
+        @RequestBody request: ReserveWarehouseItemRequest
+    ): ReserveWarehouseItemResponse =
+            reservationItemUseCase.execute(request.itemId, request.quantity).toResponse()
 }

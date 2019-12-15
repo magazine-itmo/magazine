@@ -11,6 +11,12 @@ class WarehouseItem(
         private set
 
     fun replenish(quantity: Int) {
+        assert(quantity > 0)
         this.quantity += quantity
+    }
+
+    fun reserve(quantity: Int) {
+        assert(quantity > 0)
+        this.quantity -= quantity
     }
 }

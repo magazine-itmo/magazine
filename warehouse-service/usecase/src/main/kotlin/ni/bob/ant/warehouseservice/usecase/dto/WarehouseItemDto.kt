@@ -15,3 +15,12 @@ fun WarehouseItem.toDto() = WarehouseItemDto(
         quantity = this.quantity,
         price = this.price
 )
+
+data class WarehouseReserveItemDto(
+        val id: Long,
+        val name: String,
+        val quantity: Int,
+        val price: Int,
+        var enoughToReserve: Boolean = false
+) {
+}

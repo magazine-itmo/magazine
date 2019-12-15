@@ -7,6 +7,7 @@
         <module>core</module>
         <module>usecase</module>
         <module>app</module>
+        <module>api</module>
     </modules>
 
     <parent>
@@ -39,7 +40,19 @@
 
     </dependencies>
 
-    <build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Greenwich.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+<!--    <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
@@ -67,6 +80,5 @@
                 </dependencies>
             </plugin>
         </plugins>
-    </build>
-
+    </build>-->
 </project>
