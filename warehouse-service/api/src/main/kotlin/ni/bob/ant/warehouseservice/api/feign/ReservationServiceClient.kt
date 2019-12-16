@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.PostMapping
 
 @Component
-@FeignClient(name = "warehouse-service", url = "localhost:8437/api/warehouse/items/reservation")
+@FeignClient(name = "warehouse-service", url = "http://localhost:8437/api/warehouse/items/reservation")
 interface ReservationServiceClient : ReservationServiceApi {
 
     @PostMapping
