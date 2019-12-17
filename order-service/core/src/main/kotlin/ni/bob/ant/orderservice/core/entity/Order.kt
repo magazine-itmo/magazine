@@ -32,11 +32,7 @@ class Order(
     }
 
     fun addItems(stockItem: StockItem, quantity: Int) {
-        val orderItem = _orderItems.find { it.stockItem == stockItem }
-                ?.let { orderItem ->
-                    orderItem.copy(quantity = orderItem.quantity + quantity)
-                }
-                ?: OrderItem(Identity.new, stockItem, quantity)
-        _orderItems.add(orderItem)
+        orderItems.find { it.stockItem == stockItem }?.replenish(quantity)
+                ?: _orderItems.add(OrderItem(Identity.new, stockItem, quantity))
     }
 }
