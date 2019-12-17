@@ -10,13 +10,11 @@ import ni.bob.ant.orderservice.usecase.exceptions.notFound
 @UseCase
 class AddOrderItemUseCase(
     private val orderRepository: OrderRepository,
-    private val orderItemRepository: OrderItemRepository,
     private val stockItemRepository: StockItemRepository
 ) {
 
     fun execute(orderId: Long, item: ItemDto): OrderDto {
-        //TODO: Implement the ability to find item by id in WarehouseService
-        val stockItem = stockItemRepository.findStockItemById(Identity(item.id)) ?: notFound<StockItem>(item.id)
+        val stockItem = stockItemRepository.reserveItemIfExists(Identity(item.id), item.amount) ?: notFound<StockItem>(item.id)
         val order = if (orderId == Identity.new.value) {
             createNewOrder(item, stockItem)
         } else {
@@ -43,13 +41,8 @@ class AddOrderItemUseCase(
         fun create(newOrder: Order): Order
     }
 
-    interface OrderItemRepository {
-        fun save(orderItem: OrderItem): OrderItem
-        fun findByStockItemId(orderId: Long, stockItemId: Identity): OrderItem?
-    }
-
     interface StockItemRepository {
-        fun findStockItemById(identity: Identity): StockItem?
+        fun reserveItemIfExists(identity: Identity, quantity: Int): StockItem?
         fun save(item: StockItem): StockItem
     }
 }

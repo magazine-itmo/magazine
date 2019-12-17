@@ -18,4 +18,11 @@ class RestResponseExceptionHandler : ResponseEntityExceptionHandler() {
         val message = Date().toString() + '\n' + ex.message
         return handleExceptionInternal(ex, message, HttpHeaders(), HttpStatus.NOT_FOUND, webRequest)
     }
+
+    //FIXME И миня
+    @ExceptionHandler(value = [RuntimeException::class])
+    fun handleNotEnoughItemsException(ex: RuntimeException, webRequest: WebRequest): ResponseEntity<Any> {
+        val message = Date().toString() + '\n' + ex.message
+        return handleExceptionInternal(ex, message, HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, webRequest)
+    }
 }
