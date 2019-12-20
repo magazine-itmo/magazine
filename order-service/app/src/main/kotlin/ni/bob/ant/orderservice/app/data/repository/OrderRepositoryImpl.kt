@@ -8,13 +8,16 @@ import ni.bob.ant.orderservice.core.entity.Order
 import ni.bob.ant.orderservice.core.entity.OrderState
 import ni.bob.ant.orderservice.usecase.gateway.OrderRepository
 import ni.bob.ant.orderservice.usecase.gateway.OrderStateRepository
+import ni.bob.ant.paymentservice.api.dto.PerformPaymentRequest
+import ni.bob.ant.paymentservice.api.feign.PerformPaymentServiceClient
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
 class OrderRepositoryImpl(
     private val jpaRepository: JpaOrderRepository,
-    private val orderStateRepository: OrderStateRepository
+    private val orderStateRepository: OrderStateRepository,
+    private val paymentServiceClient: PerformPaymentServiceClient
 ) : OrderRepository {
 
     override fun create(newOrder: Order): Order {
@@ -39,4 +42,8 @@ class OrderRepositoryImpl(
 
     private fun OrderModel.findState(): OrderState = orderStateRepository.findStateByName(this.state)
             ?: error("Illegal state name ${this.state}")
+
+    override fun performPayment(identity: Identity, totalCost: Long): Boolean {
+        return paymentServiceClient.performPayment(PerformPaymentRequest(identity.value, totalCost)).isSuccess
+    }
 }

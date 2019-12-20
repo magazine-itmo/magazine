@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.ComponentScan
 
 @ComponentScan(basePackages = ["ni.bob.ant.orderservice.usecase.usecase", "ni.bob.ant.orderservice.app"])
-@EnableFeignClients(basePackages = ["ni.bob.ant.warehouseservice.api"])
+@EnableFeignClients(basePackages = ["ni.bob.ant.warehouseservice.api", "ni.bob.ant.paymentservice.api"])
 @SpringBootApplication
 class OrderServiceApplication
 

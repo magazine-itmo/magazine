@@ -4,10 +4,7 @@ import ni.bob.ant.orderservice.app.dto.OrderItemRequest
 import ni.bob.ant.orderservice.app.dto.OrderResponse
 import ni.bob.ant.orderservice.app.dto.toResponse
 import ni.bob.ant.orderservice.usecase.dto.ItemDto
-import ni.bob.ant.orderservice.usecase.usecase.AddOrderItemUseCase
-import ni.bob.ant.orderservice.usecase.usecase.ChangeOrderStatusUseCase
-import ni.bob.ant.orderservice.usecase.usecase.FindOrderUseCase
-import ni.bob.ant.orderservice.usecase.usecase.GetAllOrdersUseCase
+import ni.bob.ant.orderservice.usecase.usecase.*
 import org.springframework.web.bind.annotation.*
 
 
@@ -17,7 +14,8 @@ class OrderController(
     private val changeOrderStatusUseCase: ChangeOrderStatusUseCase,
     private val getAllOrdersUseCase: GetAllOrdersUseCase,
     private val findOrderUseCase: FindOrderUseCase,
-    private val addOrderItemUseCase: AddOrderItemUseCase
+    private val addOrderItemUseCase: AddOrderItemUseCase,
+    private val performPaymentUseCase: PerformPaymentUseCase
 ) {
 
     @GetMapping
@@ -34,4 +32,10 @@ class OrderController(
     fun addItemToOrder(@PathVariable id: Long, @RequestBody request: OrderItemRequest): Long {
         return addOrderItemUseCase.execute(id, ItemDto(request.id, request.amount)).id
     }
+
+    @PutMapping("/{id}/payment")
+    fun performPayment(@PathVariable id: Long): Long {
+        return performPaymentUseCase.execute(id).id
+    }
+
 }
