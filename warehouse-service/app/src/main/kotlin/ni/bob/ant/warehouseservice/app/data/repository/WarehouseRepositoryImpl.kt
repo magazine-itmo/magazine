@@ -6,7 +6,9 @@ import ni.bob.ant.warehouseservice.core.entity.Identity
 import ni.bob.ant.warehouseservice.core.entity.WarehouseItem
 import ni.bob.ant.warehouseservice.usecase.gateway.WarehouseRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
 
 @Repository
 class WarehouseRepositoryImpl(private val jpaRepository: JpaWarehouseRepository) : WarehouseRepository {
@@ -27,4 +29,21 @@ class WarehouseRepositoryImpl(private val jpaRepository: JpaWarehouseRepository)
     override fun save(item: WarehouseItem) {
         jpaRepository.save(item.toModel())
     }
+
+
+}
+
+@Service
+class OrderConsumer(
+        val warehouseRepository: WarehouseRepository
+) {
+    @KafkaListener(id = "order-consumer", topics = ["Orders"])
+    fun consumeMessage(message: Message) {
+        warehouseRepository.findByItemId(Identity(message.itemId))!!.apply { replenish(message.quantity) }.let(warehouseRepository::save)
+    }
+
+    data class Message(
+            val itemId: Long,
+            val quantity: Int
+    )
 }
